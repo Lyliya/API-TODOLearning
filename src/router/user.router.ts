@@ -80,6 +80,22 @@ router.post("/task", userAuth, async (req, res) => {
   }
 });
 
+router.delete("/task/:id", userAuth, async (req, res) => {
+  try {
+    const userController = new UserController();
+    const response = await userController.deleteUserTask(
+      Number(req.params.id),
+      Number(res.locals.id)
+    );
+    res.status(200).json(response);
+  } catch (e: any) {
+    const status = e.status || 500;
+    res.status(status).json({
+      error: e.message || "Internal server error"
+    });
+  }
+});
+
 router.put("/task/:id", userAuth, async (req, res) => {
   try {
     const userController = new UserController();

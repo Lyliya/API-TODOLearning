@@ -5,7 +5,7 @@ import { getUser, getUserByName, createUser } from "../repository/user";
 import { ITaskUpdate } from "../repository/task";
 import TaskController from "./task.controller";
 import config from "../config";
-import { FindOneOptions } from "typeorm";
+import { DeleteResult, FindOneOptions } from "typeorm";
 
 export interface ILogin {
   user: User;
@@ -48,5 +48,13 @@ export default class UserController {
   ): Promise<Task | undefined> {
     const taskController = new TaskController();
     return taskController.updateTask(options, data);
+  }
+
+  public async deleteUserTask(
+    userId: number,
+    taskId: number
+  ): Promise<DeleteResult> {
+    const taskController = new TaskController();
+    return taskController.deleteTask({ userId, id: taskId });
   }
 }

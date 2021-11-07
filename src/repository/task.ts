@@ -1,4 +1,10 @@
-import { getRepository, FindManyOptions, FindOneOptions } from "typeorm";
+import {
+  getRepository,
+  FindManyOptions,
+  FindOneOptions,
+  DeleteResult,
+  FindConditions
+} from "typeorm";
 import { Task } from "../entity";
 import { BadRequest } from "../errors";
 
@@ -22,6 +28,13 @@ export const createTask = async (
 export const getTasks = async (options: FindManyOptions): Promise<Task[]> => {
   const taskRepository = getRepository(Task);
   return taskRepository.find(options);
+};
+
+export const deleteTask = async (
+  options: FindConditions<Task>
+): Promise<DeleteResult> => {
+  const taskRepository = getRepository(Task);
+  return taskRepository.delete(options);
 };
 
 export const updateTask = async (
