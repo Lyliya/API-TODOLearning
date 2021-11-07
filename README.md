@@ -34,8 +34,14 @@ npm start
 ```
 
 ## Q/A
-Q: Why do you use plaintext for the password ? Why are you not using any .env file or configuration ?  
-A: This API is only meant for development purposes, implementing bcrypt or configuration can be done in 5 minutes here but is not the purpose of all this project
+**Q:** Why a TODO App ?  
+**A:** It's a really great way to start learning, it provide entities, relation between them, scoped action and many more. It's easy and fast to do and make you learn a lot of skills
+
+**Q:** Why do you use plaintext for the password ? Why are you not using any .env file or configuration ?  
+**A:** This API is only meant for development purposes, implementing bcrypt or configuration can be done in 5 minutes here but is not the purpose of this project
+
+**Q:** Why do you use an API instead of localStorage in your Front-End App  
+**A:** I want yo be able to synchronize all my front-end app. And using an API is a good way to start learning interactivity with the outside world. If i can implement this one, I can implement a large majority of other API.
 
 ## Feedback
-If you have any feedback regarding to the architecture or any advice on my way to code, feel free to make a PR explaining how you would have done it, or send me a mail at gguerin45480@gmail.com
+If you have any feedback regarding to the architecture or any advices on my way to code, feel free to make a PR explaining how you would have done it, or send me a mail at gguerin45480@gmail.com
