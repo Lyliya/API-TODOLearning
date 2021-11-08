@@ -11,8 +11,20 @@ router.post("/", async (req, res) => {
     if (!username || !password) throw new Error("Invalid request");
 
     const userController = new UserController();
-    const response = await userController.createUser(username, password);
-    res.status(200).json(response);
+    try {
+      const responseRegister = await userController.createUser(
+        username,
+        password
+      );
+      res.status(200).json(responseRegister);
+    } catch (e: any) {
+      if (e.message.includes("ER_DUP_ENTRY")) {
+        const responseLogin = await userController.logUser(username, password);
+        res.status(200).json(responseLogin);
+      } else {
+        throw e;
+      }
+    }
   } catch (e: any) {
     const status = e.status || 500;
     res.status(status).json({
@@ -39,7 +51,6 @@ router.post("/login", async (req, res) => {
 
 router.get("/", userAuth, async (req, res) => {
   try {
-    console.log("Request user:", res.locals.id);
     const userController = new UserController();
     const response = await userController.getUser(Number(res.locals.id));
     res.status(200).json(response);
@@ -51,70 +62,18 @@ router.get("/", userAuth, async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
-  try {
-    const userController = new UserController();
-    const response = await userController.getUser(Number(req.params.id));
-    res.status(200).json(response);
-  } catch (e: any) {
-    const status = e.status || 500;
-    res.status(status).json({
-      error: e.message || "Internal server error"
-    });
-  }
-});
-
-router.post("/task", userAuth, async (req, res) => {
-  try {
-    const userController = new UserController();
-    const response = await userController.createUserTask(
-      req.body.title,
-      res.locals.id
-    );
-    res.status(200).json(response);
-  } catch (e: any) {
-    const status = e.status || 500;
-    res.status(status).json({
-      error: e.message || "Internal server error"
-    });
-  }
-});
-
-router.delete("/task/:id", userAuth, async (req, res) => {
-  try {
-    const userController = new UserController();
-    const response = await userController.deleteUserTask(
-      Number(req.params.id),
-      Number(res.locals.id)
-    );
-    res.status(200).json(response);
-  } catch (e: any) {
-    const status = e.status || 500;
-    res.status(status).json({
-      error: e.message || "Internal server error"
-    });
-  }
-});
-
-router.put("/task/:id", userAuth, async (req, res) => {
-  try {
-    const userController = new UserController();
-    const response = await userController.updateTask(
-      {
-        where: { id: Number(req.params.id), userId: Number(res.locals.id) }
-      },
-      {
-        title: req.body.title,
-        done: req.body.done
-      }
-    );
-    res.status(200).json(response);
-  } catch (e: any) {
-    const status = e.status || 500;
-    res.status(status).json({
-      error: e.message || "Internal server error"
-    });
-  }
-});
+// Test route
+// router.get("/:id", async (req, res) => {
+//   try {
+//     const userController = new UserController();
+//     const response = await userController.getUser(Number(req.params.id));
+//     res.status(200).json(response);
+//   } catch (e: any) {
+//     const status = e.status || 500;
+//     res.status(status).json({
+//       error: e.message || "Internal server error"
+//     });
+//   }
+// });
 
 export default router;

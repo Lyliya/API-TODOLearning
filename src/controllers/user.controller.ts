@@ -5,7 +5,7 @@ import { getUser, getUserByName, createUser } from "../repository/user";
 import { ITaskUpdate } from "../repository/task";
 import TaskController from "./task.controller";
 import config from "../config";
-import { DeleteResult, FindOneOptions } from "typeorm";
+import { DeleteResult, FindManyOptions, FindOneOptions } from "typeorm";
 
 export interface ILogin {
   user: User;
@@ -13,8 +13,12 @@ export interface ILogin {
 }
 
 export default class UserController {
-  public async createUser(username: string, password: string): Promise<User> {
-    return createUser(username, password);
+  public async createUser(username: string, password: string): Promise<ILogin> {
+    let user = await createUser(username, password);
+    return {
+      user,
+      access_token: jwt.sign({ id: user.id }, config.JWT_SECRET)
+    };
   }
   public async getUser(id: number): Promise<User | undefined> {
     return getUser(id);
