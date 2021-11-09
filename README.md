@@ -1,18 +1,7 @@
 # Basic TODO Api Project
 
 This API is created to help in my journey to learn front-web framework and back-end architecture using Typescript, Express and TypeORM  
-You can find all the front-web application here :
-
-**Web**
-- ReactJS - TBD
-- VueJS - TBD
-- Angular - TBD
-
-**Mobile**
-- SwiftUI - TBD
-- React Native - TBD
-- Flutter - TBD
-
+You can find all the information for the project in the [main repository](https://github.com/Lyliya/TODOLearning)
 
 
 ## Usage
@@ -34,8 +23,6 @@ npm start
 ```
 
 ## Q/A
-**Q:** Why a TODO App ?  
-**A:** It's a really great way to start learning, it provide entities, relation between them, scoped action and many more. It's easy and fast to do and make you learn a lot of skills
 
 **Q:** Why do you use plaintext for the password ? Why are you not using any .env file or configuration ?  
 **A:** This API is only meant for development purposes, implementing bcrypt or configuration can be done in 5 minutes here but is not the purpose of this project
